@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         sprites = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
         x = 0; y = 0;
         setContentView(b);
+        b.run();
 
     }
     @Override
