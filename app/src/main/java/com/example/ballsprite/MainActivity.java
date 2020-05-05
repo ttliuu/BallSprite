@@ -19,10 +19,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        b = new Animateor(this);
+
+
         sprites = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
         x = 0; y = 0;
+        b = new Animateor(this);
+        setContentView(R.layout.activity_main);
         setContentView(b);
         b.run();
 
@@ -45,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
         SurfaceHolder sh;
         boolean isSafe = false;
         int indicator = 1;
+        Control ctrl;
 
         public Animateor(Context context) {
             super(context);
             sh = getHolder();
+            ctrl = new Control(sprites);
         }
 
         @Override
@@ -60,21 +64,27 @@ public class MainActivity extends AppCompatActivity {
                 Canvas c = sh.lockCanvas();
                 c.drawARGB(255,255,100,200);
                 // c.drawBitmap(sprites,x,y,null);
-                Rect src = new Rect(0,0,200,200);
-                Rect dest = new Rect(0,0,0,0);
-                if (indicator == 1)
-                    dest = new Rect(x, y, x + 100, y + 120);
-                if (indicator == -1)
-                    dest = new Rect(x - 100, y - 100, x, y);
-                c.drawBitmap(sprites,src,dest,null);
+                /* Rect src = new Rect(0,0,400,400);
+                Rect dest = new Rect(x,y,200+x,200+y);
+                /* if (indicator == 1)
+                     dest = new Rect(x, y, x + 100, y + 120);
+                    if (indicator == -1)
+                  dest = new Rect(x - 100, y - 100, x, y);*/
+               /* c.drawBitmap(sprites,src,dest,null);
                 if (indicator == 1)
                     x+=10;
                 if (indicator == -1)
                     x-=10;
-                if ( x > c.getWidth())
-                    x = c.getWidth(); indicator = 1;
-                if ( x < 0)
-                    x = 0; indicator = -1;
+                if ( x + 200> c.getWidth()) {
+                    x = c.getWidth() - 200;
+                    indicator = -1;
+                }
+                else if ( x < 0) {
+                    x = 0;
+                    indicator = 1;
+                }*/
+               ctrl.draw(c);
+               ctrl.update(c);
 
                 sh.unlockCanvasAndPost(c);
             }
